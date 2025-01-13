@@ -1,0 +1,23 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+Solutions:
+
+with CTR_cte AS(
+SELECT
+app_id,
+count(*) Filter(where event_type='click') as NOC,
+count(*) FILTER(where event_type='impression') as NOI
+from events
+group by app_id
+)
