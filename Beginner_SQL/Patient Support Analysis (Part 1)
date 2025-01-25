@@ -24,6 +24,15 @@ policy_holder_count
 Explanation:
 The only caller who made three, or more calls is policy holder ID 2.
 
+
+Solution:
+SELECT count(policy_holder_id) as policy_holder_count FROM 
+(
+select policy_holder_id, count(case_id)
+from callers
+group by policy_holder_id having count(case_id)>=3
+)as call_record;
+
 The dataset you are querying against may have different input & output - this is just an example!
 
 
