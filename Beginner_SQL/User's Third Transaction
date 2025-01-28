@@ -17,4 +17,20 @@ user_id	spend	transaction_date
 111	89.60	02/05/2022 12:00:00
 The dataset you are querying against may have different input & output - this is just an example!
 
+Solution 1:
+
+  Select 
+  user_id,
+  spend,
+  transaction_date
+FROM (
+  SELECT 
+    user_id, 
+    spend, 
+    transaction_date, 
+    ROW_NUMBER() OVER (
+      PARTITION BY user_id ORDER BY transaction_date) AS row_num
+  FROM transactions) AS trans_num 
+WHERE row_num = 3;
+
 
