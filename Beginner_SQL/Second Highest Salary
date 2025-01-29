@@ -59,3 +59,15 @@ Solution 5:
 select salary FROM
 (select salary from employee order by salary desc limit 2) as sub_employee 
 order by salary asc limit 1;
+
+
+Solution 6:
+SELECT
+  MAX(salary) second_highest_salary
+FROM
+  employees
+WHERE
+  salary NOT IN (
+      SELECT MAX(salary)
+      FROM employees
+  )
