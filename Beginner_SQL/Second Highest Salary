@@ -28,3 +28,12 @@ WHERE salary < (
 );
 
 Solution 2:
+
+With highest_salary_cte as
+(
+select MAX(salary) as highest_salary from employee
+)
+
+Select MAX(salary) as second_highest_salary
+from employee
+where salary < (select highest_salary from highest_salary_cte );
