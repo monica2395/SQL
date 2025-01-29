@@ -18,3 +18,13 @@ Example Output:
 second_highest_salary
 2230
 The output represents the second highest salary among all employees. In this case, the second highest salary is $2,230.
+
+Solution 1:
+SELECT MAX(salary) AS second_highest_salary
+FROM employee
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employee
+);
+
+Solution 2:
