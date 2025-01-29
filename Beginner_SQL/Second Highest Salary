@@ -37,3 +37,10 @@ select MAX(salary) as highest_salary from employee
 Select MAX(salary) as second_highest_salary
 from employee
 where salary < (select highest_salary from highest_salary_cte );
+
+
+Solution 3:
+SELECT DISTINCT salary as second_highest_salary
+FROM employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
