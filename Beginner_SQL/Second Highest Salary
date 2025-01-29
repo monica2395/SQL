@@ -44,3 +44,13 @@ SELECT DISTINCT salary as second_highest_salary
 FROM employee
 ORDER BY salary DESC
 LIMIT 1 OFFSET 1;
+
+Solution  4:
+with salary_rank_cte as(
+select salary,
+DENSE_RANK() OVER (order by salary DESC) as salary_rank
+from employee
+)
+Select salary as second_highest_salary
+from salary_rank_cte
+where salary_rank=2;
