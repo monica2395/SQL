@@ -26,3 +26,14 @@ user_id	tweet_date	rolling_avg_3d
 111	06/04/2022 00:00:00	2.67
 111	06/05/2022 00:00:00	4.00
 The dataset you are querying against may have different input & output - this is just an example!
+
+
+Solution:
+SELECT 
+user_id,
+tweet_date,
+ROUND(AVG(tweet_count) OVER(
+    Partition by user_id 
+    Order by tweet_date
+    ROWS BETWEEN 2 PRECEDING AND CURRENT ROW),2) as rolling_avg_3d
+FROM tweets;
