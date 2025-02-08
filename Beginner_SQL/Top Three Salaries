@@ -45,3 +45,24 @@ The output displays the high earners in each department.
 In the Data Analytics deaprtment, James Anderson leads with a salary of $4,000, followed by Emma Thompson earning $3,800, and Daniel Rodriguez with $2,230.
 In the Data Science department, both Noah Johnson and William Davis earn $6,800, with Noah listed before William due to alphabetical ordering.
 The dataset you are querying against may have different input & output - this is just an example!
+
+
+Solution1:
+with high_earner_cte as( 
+  SELECT 
+    name,
+    salary,
+    department_id,
+     DENSE_RANK() OVER (
+     PARTITION BY department_id order by salary desc) as rn
+FROM employee)
+
+SELECT 
+  d.department_name,
+  s.name,
+  s.salary
+FROM high_earner_cte AS s
+INNER JOIN department AS d
+  ON s.department_id = d.department_id
+WHERE s.rn <= 3
+ORDER BY d.department_name ASC, s.salary DESC, s.name ASC;
