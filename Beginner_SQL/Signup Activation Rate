@@ -41,3 +41,14 @@ Explanation:
 67% of users have successfully completed their signup and activated their accounts. The remaining 33% have not yet replied to the text to confirm their signup.
 
 The dataset you are querying against may have different input & output - this is just an example!
+
+Solution:
+SELECT 
+  ROUND(COUNT(texts.email_id)::DECIMAL
+    /COUNT(DISTINCT emails.email_id),2) AS activation_rate
+FROM emails
+LEFT JOIN texts
+  ON emails.email_id = texts.email_id
+  AND texts.signup_action = 'Confirmed'; 
+
+
