@@ -34,3 +34,21 @@ Explanation:
 Customer 1 bought from Analytics, Containers, and Compute categories of Azure, and thus is a Supercloud customer. Customer 2 isn't a Supercloud customer, since they don't buy any container services from Azure.
 
 The dataset you are querying against may have different input & output - this is just an example!
+
+Solution:
+
+WITH supercloud_customer AS (
+  SELECT 
+    customers.customer_id, 
+    COUNT(DISTINCT products.product_category) AS product_count
+  FROM customer_contracts AS customers
+  INNER JOIN products 
+    ON customers.product_id = products.product_id
+  GROUP BY customers.customer_id
+)
+
+SELECT customer_id
+FROM supercloud_customer
+WHERE product_count = (
+  SELECT COUNT(DISTINCT product_category) FROM products
+);
