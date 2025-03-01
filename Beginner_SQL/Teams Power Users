@@ -50,4 +50,3 @@ order by message_count DESC
 LIMIT 2;
 
 
-
