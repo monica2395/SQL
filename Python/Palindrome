@@ -18,3 +18,11 @@ Example #2
 Input: phrase = "I love SQL <3"
 
 Output: False
+
+
+
+Solution1:
+
+def isPalindrome(phrase):
+  phrase = ''.join(char for char in phrase if char.isalnum()).lower()
+  return phrase == phrase[::-1]
