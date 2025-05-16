@@ -24,3 +24,21 @@ measurement_day	odd_sum	even_sum
 07/10/2022 00:00:00	2355.75	1662.74
 07/11/2022 00:00:00	1124.50	1234.14
 
+
+
+
+Solution 1:
+
+with cte as(
+SELECT measurement_id,
+measurement_value as val,
+cast(measurement_time as Date) as measurement_day,
+Dense_Rank()Over(partition by cast(measurement_time as Date) 
+order by measurement_time) as RN
+FROM measurements)
+
+Select measurement_day,
+Sum(Case when RN%2=1 then val else 0 END) as odd_sum,
+Sum(Case when RN%2=0 then val else 0 END) as even_sum
+from cte
+group by measurement_day;
