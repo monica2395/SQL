@@ -27,7 +27,7 @@ measurement_day	odd_sum	even_sum
 
 
 
-Solution 1:
+Solution 1(Using cte and Dense Rank)
 
 with cte as(
 SELECT measurement_id,
@@ -42,3 +42,23 @@ Sum(Case when RN%2=1 then val else 0 END) as odd_sum,
 Sum(Case when RN%2=0 then val else 0 END) as even_sum
 from cte
 group by measurement_day;
+
+
+
+
+Solution 2 (Using cte and Row_number)
+
+with cte as(
+SELECT measurement_id,
+measurement_value as val,
+cast(measurement_time as Date) as measurement_day,
+Row_Number()Over(partition by cast(measurement_time as Date) 
+order by measurement_time) as RN
+FROM measurements)
+
+Select measurement_day,
+Sum(Case when RN%2=1 then val else 0 END) as odd_sum,
+Sum(Case when RN%2=0 then val else 0 END) as even_sum
+from cte
+group by measurement_day;
+
