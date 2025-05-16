@@ -14,3 +14,7 @@ def factorial(n):
 
 Solution2:
 
+import math
+
+def factorial(n):
+  return math.factorial(n)
